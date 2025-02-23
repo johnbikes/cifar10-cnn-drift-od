@@ -1,0 +1,2 @@
+https://www.kaggle.com/code/shadabhussain/cifar-10-cnn-using-pytorch
+https://github.com/IFCA-Advanced-Computing/frouros?tab=readme-ov-file#-data-drift
