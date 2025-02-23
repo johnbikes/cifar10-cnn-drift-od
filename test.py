@@ -1,6 +1,7 @@
 from pathlib import Path
 
 import torch
+from torch import nn
 from torchvision.datasets import ImageFolder
 from torchvision.transforms import ToTensor
 from torch.utils.data.dataloader import DataLoader
@@ -50,7 +51,20 @@ def main():
     print('Label:', dataset.classes[label], ', Predicted:',
            predict_image(img, model, dataset, device))
 
+    # drift
+    # can we look at some previous features
+    for name, layer in model.network.named_parameters():
+        print(f"Layer name: {name}, Layer: {layer}")
+    for i in range(5, 0, -1):
+        # print(f"{model.network[-i].shape}")
+        print(f"{-i}, {model.network[-i] = }")
 
+    # cut off last linear layer
+    model_network_short = nn.Sequential(*list(model.network)[:-1])
+    print(model_network_short)
+    img_input = to_device(img.unsqueeze(0), device)
+    features_out = model_network_short(img_input)
+    print(f"{features_out.shape = }") # features_out.shape = torch.Size([1, 512])
 
 if __name__ == '__main__':
     main()
